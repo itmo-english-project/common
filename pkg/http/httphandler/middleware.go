@@ -4,10 +4,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/itmo-english-project/exchange/pkg/contexts"
-	"github.com/itmo-english-project/exchange/pkg/http/httpserver"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapio"
+
+	"github.com/itmo-english-project/common/pkg/contexts"
+	"github.com/itmo-english-project/common/pkg/http/httpserver"
 )
 
 func DefaultMiddleware(l *zap.Logger) []httpserver.Middleware {

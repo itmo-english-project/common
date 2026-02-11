@@ -5,8 +5,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 
-	"github.com/itmo-english-project/exchange/pkg/contexts"
-	"github.com/itmo-english-project/exchange/pkg/http/httperrors"
+	"github.com/itmo-english-project/common/pkg/contexts"
+	"github.com/itmo-english-project/common/pkg/http/httperrors"
 )
 
 func ErrorHandler(c *fiber.Ctx, err error) error {

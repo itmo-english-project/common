@@ -5,7 +5,7 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/itmo-english-project/exchange/pkg/log"
+	"github.com/itmo-english-project/common/pkg/log"
 )
 
 type valueType string
