@@ -1,4 +1,4 @@
-module github.com/itmo-english-project/exchange
+module github.com/itmo-english-project/common
 
 go 1.24.0
 
