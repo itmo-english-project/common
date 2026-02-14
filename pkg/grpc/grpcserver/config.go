@@ -39,7 +39,7 @@ func WithLoggingInterceptor(ctx context.Context) Option {
 		}
 
 		interceptor := logging.UnaryServerInterceptor(
-			grpcinterceptors.InterceptorLogger(contexts.GetLogger(ctx)),
+			grpcinterceptors.UnaryLoggerInterceptor(contexts.GetLogger(ctx)),
 			loggingOpts...)
 		cfg.interceptors = append(cfg.interceptors, interceptor)
 	}
@@ -52,7 +52,7 @@ func WithRecoveryInterceptor() Option {
 		}
 
 		recoveryOpts := []recovery.Option{
-			recovery.WithRecoveryHandler(func(p interface{}) (err error) {
+			recovery.WithRecoveryHandler(func(p interface{}) error {
 				cfg.logger.Error("recovered from panic", zap.Any("panic", p))
 				return status.Errorf(codes.Internal, "internal server error")
 			}),

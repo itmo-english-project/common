@@ -21,7 +21,6 @@ type ClientConfig struct {
 	dialOptions     []grpc.DialOption
 	logger          *zap.Logger
 	timeout         time.Duration
-	retryOpts       []retry.CallOption
 	enableRetry     bool
 	enableTLS       bool
 	keepaliveParams keepalive.ClientParameters
@@ -57,7 +56,7 @@ func WithLoggingInterceptor(ctx context.Context) ClientOption {
 		}
 
 		interceptor := logging.UnaryClientInterceptor(
-			grpcinterceptors.InterceptorLogger(contexts.GetLogger(ctx)),
+			grpcinterceptors.UnaryLoggerInterceptor(contexts.GetLogger(ctx)),
 			loggingOpts...,
 		)
 		cfg.interceptors = append(cfg.interceptors, interceptor)

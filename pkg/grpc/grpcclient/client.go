@@ -1,6 +1,7 @@
 package grpcclient
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -30,7 +31,7 @@ func NewConnection(opts ...ClientOption) (*grpc.ClientConn, error) {
 	}
 
 	if cfg.target == "" {
-		return nil, fmt.Errorf("target address is required")
+		return nil, errors.New("target address is required")
 	}
 
 	cfg.dialOptions = append(cfg.dialOptions, grpc.WithKeepaliveParams(cfg.keepaliveParams))
@@ -44,7 +45,7 @@ func NewConnection(opts ...ClientOption) (*grpc.ClientConn, error) {
 		return nil, fmt.Errorf("failed to dial %s: %w", cfg.target, err)
 	}
 
-	cfg.logger.Info("gRPC client connected", zap.String("target", cfg.target))
+	cfg.logger.Info("client connected", zap.String("target", cfg.target))
 
 	return conn, nil
 }

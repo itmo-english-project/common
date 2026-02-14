@@ -1,6 +1,7 @@
 package grpcserver
 
 import (
+	"context"
 	"fmt"
 	"net"
 
@@ -39,20 +40,24 @@ func New(opts ...Option) *grpc.Server {
 	return server
 }
 
-func MustListenAndServe(server *grpc.Server, port int, logger *zap.Logger) {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+func MustListenAndServe(ctx context.Context, server *grpc.Server, port int, logger *zap.Logger) {
+	var lc net.ListenConfig
+
+	lis, err := lc.Listen(ctx, NetTCP, fmt.Sprintf(":%d", port))
 	if err != nil {
 		logger.Panic("failed to listen", zap.Error(err), zap.Int("port", port))
 	}
 
-	logger.Info("gRPC server started", zap.Int("port", port))
+	logger.Info("server started", zap.Int("port", port))
 	if err = server.Serve(lis); err != nil {
 		logger.Panic("failed to serve", zap.Error(err))
 	}
 }
 
-func ListenAndServe(server *grpc.Server, port int) error {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+func ListenAndServe(ctx context.Context, server *grpc.Server, port int) error {
+	var lc net.ListenConfig
+
+	lis, err := lc.Listen(ctx, NetTCP, fmt.Sprintf(":%d", port))
 	if err != nil {
 		return fmt.Errorf("failed to listen on port %d: %w", port, err)
 	}
